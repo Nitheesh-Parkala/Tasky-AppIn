@@ -70,4 +70,8 @@ var handelsubmit =(event)=>{
     type: document.getElementById("tags").value,
     description: document.getElementById("taskDescription").value,
   };
+  //spread operator
+     taskContents.insertAdjacentHtml("beforeend",htmlTaskContent({
+      ...input, id
+     }))
 }
