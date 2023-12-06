@@ -1,11 +1,11 @@
 # Tasky-AppIn
 
-TaskyAppIn is a simple task management web application created using Bootstrap CSS and JavaScript.
+Developed a task management web app using HTML, CSS, Bootstrap, and JavaScript. Implemented dynamic card creation and modal interactions for tasks, allowing users to add, edit, delete, and search tasks. Utilized local storage to persist data and ensure a seamless user experience.
 
 ## Features
 
 - Add tasks with descriptions
-- Mark tasks as completed
+- Edit tasks
 - Delete tasks
 - Responsive design for various screen sizes
 
@@ -31,7 +31,7 @@ You can check out a live demo : [TaskyAppIn ](https://nitheesh-parkala.github.io
 ### Usage
 Open the application in your web browser.
 Add new tasks by entering the task description and clicking the "Add Task" button.
-Mark tasks as completed by checking the checkbox next to each task.
+Edit and Search task.
 Delete tasks by clicking the "Delete" button.
 
 ### Contributing
