@@ -11,7 +11,7 @@ TaskyAppIn is a simple task management web application created using Bootstrap C
 
 ## Demo
 
-You can check out a live demo : [TaskyAppIn Demo](https://nitheesh-parkala.github.io/Tasky-AppIn/)
+You can check out a live demo : [TaskyAppIn ](https://nitheesh-parkala.github.io/Tasky-AppIn/)
 
 
 
