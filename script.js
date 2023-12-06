@@ -32,21 +32,16 @@ var htmlTaskContent =({id,title,description,type,url})=>`
           <span class='badge bg-primary m-1'>${type}</span>
         </div>
       </div>
-          <div class='card-footer'>
-        <button 
-        type='button' 
-        class='btn btn-outline-primary float-right' 
-        data-bs-toggle='modal'
-        data-bs-target='#showTask'
-        id=${id}
-        onclick='openTask.apply(this, arguments)'>
-          Open Task
-        </button>
+   <div class='card-footer'>
+        <button  type='button' class='btn btn-outline-primary float-right' data-bs-toggle='modal' data-bs-target='#showTask' id=${id}
+         onclick='openTask.apply(this,arguments)'>
+          Open Task</button>
       </div>
     </div>
   </div>
 `;
-var htmlTaskContents =({id,title,description,url})=>{
+//dynamic openTask modal content
+var htmlModalContent =({id,title,description,url})=>{
   var date = new Date(parseInt(id));
   return `
 <div id = ${id}>
@@ -60,6 +55,7 @@ ${
           <p class='lead'>${description}</p>
  </div> `;
 };
+
 // here we will be updating our local storage (i.e., the modals/cards which we see on our ui)
 var updateLocalStorage = () => {
   localStorage.setItem(
@@ -107,8 +103,75 @@ var handleSubmit = ( event )=>{
 };
 
 // opens new modal on our ui when user clicks open task
-const openTask = (e) => {
+var openTask = (e) => {
   // pop up the current one
   if (!e) e = window.event;
-}
 
+  var getTask = state.taskList.find(({id})=>id===e.target.id);
+  taskModal.innerHTML=htmlModalContent(getTask);
+};
+
+var deleteTask =(e)=>{
+  if(!e)e=window.event;
+
+  var targetID = e.target.getAttribute("name");
+  var type= e.target.tagName;
+  // console.log(type);
+  // console.log(targetID);
+  var removeTask= state.taskList.filter(({id})=>id !== targetID)
+  //console.log(removeTask);
+
+  state.taskList=removeTask;
+  updateLocalStorage();
+
+  if(type=="BUTTON"){
+    console.log(e.target.parentNode.parentNode.parentNode);
+  return e.target.parentNode.parentNode.parentNode.parentNode.removeChild(
+    e.target.parentNode.parentNode.parentNode
+  );
+  }
+   return e.target.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(
+    e.target.parentNode.parentNode.parentNode.parentNode
+);
+};
+
+
+var editTask =(e)=>{
+  if(!e)e=window.event;
+
+  var type= e.target.tagName;
+
+  var parentNode;
+  let taskTitle;
+  var taskDescription;
+  var taskType;
+  let submitButton;
+
+  if(type=="BUTTON"){
+    parentNode = e.target.parentNode.parentNode
+  }else{
+    parentNode = e.target.parentNode.parentNode.parentNode
+  }
+
+  taskTitle = parentNode.childNodes[3].childNodes[3];
+   taskDescription = parentNode.childNodes[3].childNodes[5];
+    taskType = parentNode.childNodes[3].childNodes[7].childNodes[1];
+    console.log(taskTitle,taskDescription,taskType);
+    submitButton =parentNode.childNodes[5].childNodes[1];
+
+    taskTitle.setAttribute("contenteditable","true");
+    taskDescription.setAttribute("contenteditable","true");
+    taskType.setAttribute("contenteditable","true");
+
+  submitButton.setAttribute('onclick',"saveEdit.apply(this,arguments)");
+  submitButton.removeAttribute("data-bs-toggle");
+   submitButton.removeAttribute("data-bs-target");
+   submitButton.innerHTML ="Save Changes";
+}
+var saveEdit =(e)=>{
+  if(!e)e=window.event;
+
+  var targetID = e.target.id;
+  var parentNode = e.target.parentNode.parentNode;
+  console.log(parentNode)
+};

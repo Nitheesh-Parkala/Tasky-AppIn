@@ -13,6 +13,7 @@ body{
     right: 0;
     padding: 15px 10px;
     width: 100%;
+    background-color: wheat;
 }
 @media (min-width:768px) {
     .add__new__btn__mobile__only{
