@@ -21,7 +21,7 @@ var htmlTaskContent =({id,title,description,type,url})=>`
       <div class='card-body'>
         ${
           url
-            ? `<img width='100%' height='150px' style="object-fit: cover; object-position: center"  src=${url} alt='card image cap' class='card-image-top md-3 rounded-lg' />`
+            ? `<img width="100%" src=${url} alt="card image cap" class="card-img-top md-3 rounded-lg"/>`
             : `<img width='100%' height='150px' style="object-fit: cover; object-position: center"  src="https://tse3.mm.bing.net/th?id=OIP.LZsJaVHEsECjt_hv1KrtbAHaHa&pid=Api&P=0" alt='card image cap' class='card-image-top md-3 rounded-lg' />`
         }
           <h4 class='task__card__title'>${title}</h4>
