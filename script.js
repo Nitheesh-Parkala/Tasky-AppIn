@@ -87,6 +87,9 @@ var handleSubmit = ( event )=>{
   if (input.title === "" || input.type === "" || input.description === "") {
     return alert("Please Fill All The Fields");
   }
+   if ( input.type.length > 15) {
+    return alert("Task type should be between 1 and 10 characters.");
+  }
   taskContents.insertAdjacentHTML(
     "beforeend",
     htmlTaskContent({
@@ -168,10 +171,68 @@ var editTask =(e)=>{
    submitButton.removeAttribute("data-bs-target");
    submitButton.innerHTML ="Save Changes";
 }
+
+
 var saveEdit =(e)=>{
   if(!e)e=window.event;
 
   var targetID = e.target.id;
   var parentNode = e.target.parentNode.parentNode;
-  console.log(parentNode)
+  // console.log(parentNode)
+
+var taskTitle= parentNode.childNodes[3].childNodes[3];
+var taskDescription = parentNode.childNodes[3].childNodes[5];
+var taskType = parentNode.childNodes[3].childNodes[7].childNodes[1];
+var submitButton = parentNode.childNodes[5].childNodes[1];
+
+// console.log(taskTitle,taskDescription);
+
+
+ var updatedData = {
+    taskTitle: taskTitle.innerHTML,
+    taskDescription: taskDescription.innerHTML,
+    taskType: taskType.innerHTML,
+  };
+
+
+let stateCopy = state.taskList;
+  stateCopy = stateCopy.map((task) =>
+    task.id === targetID
+      ? {
+          id: task.id,
+          title: updatedData.taskTitle,
+          description: updatedData.taskDescription,
+          type: updatedData.taskType,
+          url: task.url,
+        }
+      : task
+  );
+
+    state.taskList = stateCopy;
+    updateLocalStorage();
+
+  taskTitle.setAttribute("contenteditable", "false");
+  taskDescription.setAttribute("contenteditable", "false");
+  taskType.setAttribute("contenteditable", "false")
+
+   submitButton.setAttribute('onclick',"openTask.apply(this,arguments)");
+  submitButton.setAttribute("data-bs-toggle", "modal");
+   submitButton.setAttribute("data-bs-target", "#showTask");
+   submitButton.innerHTML ="Open Task";
+  };
+
+ const searchTask = (e) => {
+  if (!e) e = window.event;
+
+  while (taskContents.firstChild) {
+    taskContents.removeChild(taskContents.firstChild);
+  }
+
+  const resultData = state.taskList.filter(({ title }) =>
+    title.toLowerCase().includes(e.target.value.toLowerCase())
+  );
+
+  resultData.map((cardData) =>
+    taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardData))
+  );
 };
